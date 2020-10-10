@@ -39,6 +39,7 @@ Choose one of the above class names (FQN) according to your runtime logging libr
 After configuring the appropriate delegate factory, creating and registering an interceptor can be achieved by following 
 the steps below:
 1. Creating your own Interceptor
+
 1.1. Non-blocking
 ```kotlin
 object LogMessagesCounterInterceptor : NoOpLogInterceptor {
