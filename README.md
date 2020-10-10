@@ -37,8 +37,9 @@ Choose one of the above class names (FQN) according to your runtime logging libr
 
 ### Usage
 After configuring the appropriate delegate factory, creating and registering an interceptor can be achieved by following 
-the below steps:
-1. Creating a non-blocking Interceptor
+the steps below:
+1. Creating your own Interceptor
+1.1. Non-blocking
 ```kotlin
 object LogMessagesCounterInterceptor : NoOpLogInterceptor {
     private val counter = AtomicLong()
@@ -51,7 +52,7 @@ object LogMessagesCounterInterceptor : NoOpLogInterceptor {
     fun totalLoggedMessages(): Long = counter.get()
 }
 ```
-2. Creating a blocking interceptor 
+1.2. Blocking 
 ```kotlin
 object BadWordLogInterceptor : NoOpLogInterceptor {
     override fun intercept(message: Any?): LogPropagation {
@@ -63,7 +64,7 @@ object BadWordLogInterceptor : NoOpLogInterceptor {
     }
 }
 ```
-3. Registering the interceptors through `LogInterceptors`
+2. Registering your own or built-in interceptors through `LogInterceptors`
 ```kotlin
 LogInterceptors.register(BadWordLogInterceptor) // applicable to all levels
 LogInterceptors.register(Level.WARN, ThreadBlockedLogInterceptor()) // built-in interceptor
