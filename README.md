@@ -45,7 +45,7 @@ the steps below:
 object LogMessagesCounterInterceptor : NoOpLogInterceptor {
     private val counter = AtomicLong()
 
-    override fun intercept(message: Any?): LogPropagation {
+    override fun intercept(logger: String, message: Any?): LogPropagation {
         counter.incrementAndGet()
         return LogPropagation.CONTINUE
     }
@@ -56,7 +56,7 @@ object LogMessagesCounterInterceptor : NoOpLogInterceptor {
 1.2. Blocking 
 ```kotlin
 object BadWordLogInterceptor : NoOpLogInterceptor {
-    override fun intercept(message: Any?): LogPropagation {
+    override fun intercept(logger: String, message: Any?): LogPropagation {
         val strMessage = message.toString()
         return when {
             "badword" in strMessage -> LogPropagation.BLOCK
