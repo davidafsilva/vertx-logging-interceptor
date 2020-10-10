@@ -73,8 +73,13 @@ LogInterceptors.register(Level.INFO, LogMessagesCounterInterceptor()) // counts 
 | :warning: | There's currently no support for mutating log messages. |
 | --- | ---- | 
 
-## Releasing
+## Build & Release
 At the project root, run the following command:
 ```shell
-./gradlew clean build release publish
+./gradlew clean build
+```
+
+After a successful build, releasing can be achieve by running:
+```shell
+./gradlew release publish
 ```
