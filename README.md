@@ -78,8 +78,3 @@ At the project root, run the following command:
 ```shell
 ./gradlew clean build release publish
 ```
-
-## Governance
-This project is maintained by the Nautilus team (UK Discovery Olisipo), for any type of inquiries please use
-the [team's mailing list](mailto:DL-OTTCDOLISIPONAUTILUS@bskyb.com) or reach one of the team members at 
-[#olisipo](https://sky.slack.com/archives/C1607PF7S) on Slack (use `@cd-nautilus` to reach us quickly).
