@@ -1,3 +1,9 @@
+# Vertx Logging Interceptor 
+
+This small library plugs into Vert.x's logging delegation by leveraging its flexible configuration, allowing 
+third-party interceptors to be built and plugged into the application logging mechanism.
+
+## Table of Contents
 * [Usage](#usage)
   + [Import](#import)
     - [Gradle](#gradle)
@@ -10,11 +16,6 @@
 * [Built-In Interceptors](#built-in-interceptors)
   + [ThreadBlockedLogInterceptor](#threadblockedloginterceptor)
 * [Building & Releasing](#building---releasing)
-  
-# Vertx Logging Interceptor 
-
-This small library plugs into Vert.x's logging delegation by leveraging its flexible configuration, allowing 
-third-party interceptors to be built and plugged into the application logging mechanism.
 
 ## Usage
 
