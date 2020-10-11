@@ -3,21 +3,22 @@ package pt.davidafsilva.vertx.logging
 import org.slf4j.event.Level
 
 object LogInterceptors {
+    private val noInterceptors: List<LogInterceptor> = emptyList()
     private val allLogLevels = Level.values()
     private val interceptors = mutableMapOf<Level, MutableList<LogInterceptor>>()
-        .withDefault { mutableListOf() }
 
     fun register(logInterceptor: LogInterceptor) {
         allLogLevels.forEach { register(it, logInterceptor) }
     }
 
     fun register(level: Level, logInterceptor: LogInterceptor) {
-        interceptors[level]!!.add(logInterceptor)
+        interceptors.computeIfAbsent(level) { mutableListOf() }
+            .add(logInterceptor)
     }
 
     fun register(level: Level, vararg logInterceptors: LogInterceptor) {
-        logInterceptors.forEach { interceptors[level]!!.add(it) }
+        logInterceptors.forEach(::register)
     }
 
-    fun interceptorsFor(level: Level): List<LogInterceptor> = interceptors[level]!!
+    fun interceptorsFor(level: Level): List<LogInterceptor> = interceptors[level] ?: noInterceptors
 }
