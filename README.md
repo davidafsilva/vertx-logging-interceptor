@@ -75,6 +75,25 @@ LogInterceptors.register(Level.INFO, LogMessagesCounterInterceptor()) // counts 
 | :warning: | There's currently no support for mutating log messages. |
 | --- | ---- | 
 
+## Built-In Interceptors
+
+### ThreadBlockedLogInterceptor
+This interceptor aims to capture thread blocks that are detect by Vert.x 
+[BlockedThreadChecker](https://github.com/eclipse-vertx/vert.x/blob/3.9/src/main/java/io/vertx/core/impl/BlockedThreadChecker.java),
+providing a metric around it.
+The exported metric has the following properties:
+
+| Name | type | Tags | 
+| --- | --- | --- | 
+| `vertx_thread_blocked_total` | Counter | `thread`: the name of the blocked thread | 
+
+e.g. the metric exported through a prometheus formatted endpoint:
+```
+# HELP vertx_thread_blocked_total Number of thread blocks detected
+# TYPE vertx_thread_blocked_total counter
+vertx_thread_blocked_total{thread="vert.x-eventloop-thread-0,5,main",} 1.0
+```
+
 ## Build & Release
 At the project root, run the following command:
 ```shell
