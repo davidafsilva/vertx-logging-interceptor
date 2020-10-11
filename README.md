@@ -33,7 +33,7 @@ Similarly, as Vert.x, it provides 4 possible configurations. One for each suppor
 
 Choose one of the above class names (FQN) according to your runtime logging library and configure it through the 
 `vertx.logger-delegate-factory-class-name` system property. You can also set it through a JVM argument: 
-`-Dvertx.logger-delegate-factory-class-name=...`.
+`-Dvertx.logger-delegate-factory-class-name=pt.davidafsilva.vertx.logging.factory.<chosen delegate factory>`.
 
 ### Usage
 After configuring the appropriate delegate factory, creating and registering an interceptor can be achieved by following 
