@@ -7,7 +7,7 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm")
     `maven-publish`
 }
 
@@ -20,8 +20,6 @@ dependencies {
     val vertxVersion: String by project
     compileOnly("io.vertx:vertx-core:$vertxVersion")
     compileOnly("io.vertx:vertx-micrometer-metrics:$vertxVersion")
-    val slf4jVersion: String by project
-    compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
 }
 
 tasks {
