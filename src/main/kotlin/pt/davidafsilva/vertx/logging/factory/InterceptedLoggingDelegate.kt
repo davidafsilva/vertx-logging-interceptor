@@ -6,8 +6,8 @@ import pt.davidafsilva.vertx.logging.LogLevel
 import pt.davidafsilva.vertx.logging.LogPropagation
 
 internal class InterceptedLoggingDelegate(
-    private val loggerName: String,
-    private val delegate: LogDelegate,
+    internal val loggerName: String,
+    internal val delegate: LogDelegate,
     private val levelInterceptors: (LogLevel) -> List<LogInterceptor>
 ) : LogDelegate by delegate {
 
