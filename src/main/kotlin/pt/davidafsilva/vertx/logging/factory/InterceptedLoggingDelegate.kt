@@ -16,7 +16,7 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun fatal(message: Any?, t: Throwable?) {
-        intercept(LogLevel.ERROR, message) { delegate.fatal(message, t) }
+        intercept(LogLevel.ERROR, message, t) { delegate.fatal(message, t) }
     }
 
     override fun error(message: Any?) {
@@ -28,11 +28,11 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun error(message: Any?, t: Throwable?) {
-        intercept(LogLevel.ERROR, message) { delegate.error(message, t) }
+        intercept(LogLevel.ERROR, message, t) { delegate.error(message, t) }
     }
 
     override fun error(message: Any?, t: Throwable?, vararg params: Any?) {
-        intercept(LogLevel.ERROR, message) { delegate.error(message, t, *params) }
+        intercept(LogLevel.ERROR, message, t) { delegate.error(message, t, *params) }
     }
 
     override fun warn(message: Any?) {
@@ -44,11 +44,11 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun warn(message: Any?, t: Throwable?) {
-        intercept(LogLevel.WARN, message) { delegate.error(message, t) }
+        intercept(LogLevel.WARN, message, t) { delegate.error(message, t) }
     }
 
     override fun warn(message: Any?, t: Throwable?, vararg params: Any?) {
-        intercept(LogLevel.WARN, message) { delegate.error(message, t, *params) }
+        intercept(LogLevel.WARN, message, t) { delegate.error(message, t, *params) }
     }
 
     override fun info(message: Any?) {
@@ -60,11 +60,11 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun info(message: Any?, t: Throwable?) {
-        intercept(LogLevel.INFO, message) { delegate.error(message, t) }
+        intercept(LogLevel.INFO, message, t) { delegate.error(message, t) }
     }
 
     override fun info(message: Any?, t: Throwable?, vararg params: Any?) {
-        intercept(LogLevel.INFO, message) { delegate.error(message, t, *params) }
+        intercept(LogLevel.INFO, message, t) { delegate.error(message, t, *params) }
     }
 
     override fun debug(message: Any?) {
@@ -76,11 +76,11 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun debug(message: Any?, t: Throwable?) {
-        intercept(LogLevel.DEBUG, message) { delegate.error(message, t) }
+        intercept(LogLevel.DEBUG, message, t) { delegate.error(message, t) }
     }
 
     override fun debug(message: Any?, t: Throwable?, vararg params: Any?) {
-        intercept(LogLevel.DEBUG, message) { delegate.error(message, t, *params) }
+        intercept(LogLevel.DEBUG, message, t) { delegate.error(message, t, *params) }
     }
 
     override fun trace(message: Any?) {
@@ -92,16 +92,29 @@ internal class InterceptedLoggingDelegate(
     }
 
     override fun trace(message: Any?, t: Throwable?) {
-        intercept(LogLevel.TRACE, message) { delegate.error(message, t) }
+        intercept(LogLevel.TRACE, message, t) { delegate.error(message, t) }
     }
 
     override fun trace(message: Any?, t: Throwable?, vararg params: Any?) {
-        intercept(LogLevel.TRACE, message) { delegate.error(message, t, *params) }
+        intercept(LogLevel.TRACE, message, t) { delegate.error(message, t, *params) }
     }
 
-    private inline fun intercept(level: LogLevel, message: Any?, logging: () -> Unit) {
-        if (levelInterceptors(level).all { it.intercept(loggerName, message) == LogPropagation.CONTINUE }) {
-            logging()
+    private inline fun intercept(
+        level: LogLevel,
+        message: Any?,
+        throwable: Throwable? = null,
+        parameters: Array<Any?>? = null,
+        logging: () -> Unit
+    ) {
+        val propagateLog = levelInterceptors(level).all { interceptor ->
+            val result = when {
+                throwable == null && parameters == null -> interceptor.intercept(loggerName, message)
+                parameters == null -> interceptor.intercept(loggerName, message, throwable!!)
+                throwable == null -> interceptor.intercept(loggerName, message, parameters)
+                else -> interceptor.intercept(loggerName, message, throwable, parameters)
+            }
+            result == LogPropagation.CONTINUE
         }
+        if (propagateLog) logging()
     }
 }
