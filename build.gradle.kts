@@ -52,7 +52,7 @@ tasks {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.7.toBigDecimal()
+                    minimum = 0.8.toBigDecimal()
                 }
             }
         }
