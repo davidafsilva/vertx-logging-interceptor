@@ -7,7 +7,8 @@ import pt.davidafsilva.vertx.logging.LogPropagation
 import pt.davidafsilva.vertx.logging.NoOpLogInterceptor
 
 class ThreadBlockedLogInterceptor @JvmOverloads constructor(
-    private val registry: MeterRegistry = BackendRegistries.getDefaultNow()
+    private val registry: MeterRegistry = BackendRegistries.getDefaultNow(),
+    private val metricName: String = VERTX_THREAD_BLOCKED_COUNTER_NAME
 ) : NoOpLogInterceptor {
 
     companion object {
@@ -36,7 +37,7 @@ class ThreadBlockedLogInterceptor @JvmOverloads constructor(
     }
 
     private fun incrementThreadBlockedCounter(blockedThread: String) = Counter
-        .builder(VERTX_THREAD_BLOCKED_COUNTER_NAME)
+        .builder(metricName)
         .description(VERTX_THREAD_BLOCKED_COUNTER_DESC)
         .tag(THREAD_TAG, blockedThread)
         .register(registry)
