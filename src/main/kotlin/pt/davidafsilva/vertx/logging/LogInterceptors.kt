@@ -3,7 +3,7 @@ package pt.davidafsilva.vertx.logging
 object LogInterceptors {
     private val noInterceptors: List<LogInterceptor> = emptyList()
     private val allLogLevels = LogLevel.values()
-    private val interceptors = mutableMapOf<LogLevel, MutableList<LogInterceptor>>()
+    internal val interceptors = mutableMapOf<LogLevel, MutableList<LogInterceptor>>()
 
     @JvmStatic
     fun register(logInterceptor: LogInterceptor) {
