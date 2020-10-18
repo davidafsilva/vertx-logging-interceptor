@@ -54,24 +54,21 @@ class ThreadBlockedLogInterceptor @JvmOverloads constructor(
         return if (valid) getThreadNameFromEntry(parts[MESSAGE_BLOCKED_THREAD_ENTRY_INDEX]) else null
     }
 
-    private fun getThreadNameFromEntry(entry: String): String {
-        // entry is formatted through AbstractMap.SimpleEntry toString
-        return when {
-            // default format: Thread[<thread_info_here>]=<task>
-            entry.startsWith(MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX) ->
-                entry.substring(
-                    // remove Thread[
-                    MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX.length,
-                    // up to ]=
-                    entry.indexOf("$MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_SUFFIX$MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER")
-                )
-            // probably a custom thread formatting was defined
-            else -> {
-                // might need adjusting for threads with '=' chars within its toString()
-                val entryDelimiter = entry.indexOf(MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER)
-                entry.substring(0, entryDelimiter)
-            }
+    // entry is formatted through AbstractMap.SimpleEntry toString
+    private fun getThreadNameFromEntry(entry: String): String = when {
+        // default format: Thread[<thread_info_here>]=<task>
+        entry.startsWith(MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX) ->
+            entry.substring(
+                // remove Thread[
+                MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX.length,
+                // up to ]=
+                entry.indexOf("$MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_SUFFIX$MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER")
+            )
+        // probably a custom thread formatting was defined
+        else -> {
+            // might need adjusting for threads with '=' chars within its toString()
+            val entryDelimiter = entry.indexOf(MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER)
+            entry.substring(0, entryDelimiter)
         }
-
     }
 }
