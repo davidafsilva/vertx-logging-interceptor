@@ -4,7 +4,9 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+    maven("https://dl.bintray.com/spekframework/spek")
     maven("https://dl.bintray.com/robfletcher/maven")
+    maven("https://dl.bintray.com/christophsturm/maven")
 }
 
 plugins {
