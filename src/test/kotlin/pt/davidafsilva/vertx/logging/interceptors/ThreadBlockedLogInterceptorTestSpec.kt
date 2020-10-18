@@ -40,12 +40,35 @@ private fun Suite.testInterception(metricName: String? = null) {
         }
     }
 
-    context("intercepting a non thread blocked message") {
-        val (registry, interceptor) = createInterceptor(metricName)
-        interceptor.intercept(validLoggerName, "invalid")
+    context("intercepting an invalid log message") {
+        context("due to its format") {
+            val (registry, interceptor) = createInterceptor(metricName)
+            interceptor.intercept(validLoggerName, "invalid")
 
-        it("should not register any metric") {
-            verify { registry wasNot called }
+            it("should not register any metric") {
+                verify { registry wasNot called }
+            }
+        }
+
+        context("due to its prefix") {
+            val (registry, interceptor) = createInterceptor(metricName)
+            interceptor.intercept(
+                validLoggerName,
+                "Bad Prefix Thread[$threadName]=my-custom-task-name has been blocked for 123.05 ms, time limit is 2000 ms"
+            )
+
+            it("should not register any metric") {
+                verify { registry wasNot called }
+            }
+        }
+
+        context("due to its suffix") {
+            val (registry, interceptor) = createInterceptor(metricName)
+            interceptor.intercept(validLoggerName, "Thread Thread[$threadName]=my-custom-task-name has been.. oops")
+
+            it("should not register any metric") {
+                verify { registry wasNot called }
+            }
         }
     }
 
