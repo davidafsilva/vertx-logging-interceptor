@@ -2,13 +2,12 @@ package pt.davidafsilva.vertx.logging.interceptors
 
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.MeterRegistry
-import io.vertx.micrometer.backends.BackendRegistries
 import pt.davidafsilva.vertx.logging.LogPropagation
 import pt.davidafsilva.vertx.logging.NoOpLogInterceptor
 
 class ThreadBlockedLogInterceptor @JvmOverloads constructor(
-    private val registry: MeterRegistry = BackendRegistries.getDefaultNow(),
-    private val metricName: String = VERTX_THREAD_BLOCKED_COUNTER_NAME
+    private val registry: MeterRegistry,
+    private val metricName: String = VERTX_THREAD_BLOCKED_COUNTER_NAME,
 ) : NoOpLogInterceptor {
 
     companion object {
