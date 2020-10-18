@@ -6,10 +6,20 @@ import org.spekframework.spek2.style.specification.Suite
 import org.spekframework.spek2.style.specification.describe
 import strikt.api.expectThat
 import strikt.assertions.containsExactly
+import strikt.assertions.isEmpty
 
 object LogInterceptorsTestSpec : Spek({
 
     describe("A log interceptors centralized storage") {
+
+        executeTestCase("retrieving the log interceptors without any registered interceptor") {
+            LogLevel.values().forEach { logLevel ->
+                val registeredInterceptors = LogInterceptors.interceptorsFor(logLevel).toList()
+                it("should not have any interceptor registered for $logLevel log level") {
+                    expectThat(registeredInterceptors).isEmpty()
+                }
+            }
+        }
 
         executeTestCase("registering a single interceptor for all log levels") {
             val logInterceptor = mockk<LogInterceptor>()
