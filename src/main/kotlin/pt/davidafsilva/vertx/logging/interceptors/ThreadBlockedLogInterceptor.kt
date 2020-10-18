@@ -57,18 +57,24 @@ class ThreadBlockedLogInterceptor @JvmOverloads constructor(
     // entry is formatted through AbstractMap.SimpleEntry toString
     private fun getThreadNameFromEntry(entry: String): String = when {
         // default format: Thread[<thread_info_here>]=<task>
-        entry.startsWith(MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX) ->
-            entry.substring(
+        entry.startsWith(MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX) -> {
+            // index of ]=
+            val entryDelimiter =
+                entry.indexOf("$MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_SUFFIX$MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER")
+            if (entryDelimiter < 0) entry
+            else entry.substring(
                 // remove Thread[
                 MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_PREFIX.length,
                 // up to ]=
-                entry.indexOf("$MESSAGE_BLOCKED_THREAD_ENTRY_THREAD_SUFFIX$MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER")
+                entryDelimiter
             )
+        }
         // probably a custom thread formatting was defined
         else -> {
             // might need adjusting for threads with '=' chars within its toString()
             val entryDelimiter = entry.indexOf(MESSAGE_BLOCKED_THREAD_ENTRY_DELIMITER)
-            entry.substring(0, entryDelimiter)
+            if (entryDelimiter >= 0) entry.substring(0, entryDelimiter)
+            else entry
         }
     }
 }

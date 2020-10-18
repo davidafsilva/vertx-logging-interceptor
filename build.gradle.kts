@@ -31,6 +31,7 @@ dependencies {
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spekVersion")
     testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     testImplementation("io.vertx:vertx-core:$vertxVersion")
+    testImplementation("io.vertx:vertx-micrometer-metrics:$vertxVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("io.strikt:strikt-core:$striktVersion")
 
