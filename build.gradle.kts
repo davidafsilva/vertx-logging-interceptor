@@ -62,16 +62,7 @@ tasks {
     val testCoverage by registering {
         group = "verification"
         description = "Runs both the coverage report and validation"
-
         dependsOn(":jacocoTestReport", ":jacocoTestCoverageVerification")
-
-        // test report must run after the tests
-        val jacocoTestReport = findByName("jacocoTestReport")
-        jacocoTestReport?.mustRunAfter(test)
-
-        // coverage verification must run after the test report
-        val jacocoTestCoverageVerification = findByName("jacocoTestCoverageVerification")
-        jacocoTestCoverageVerification?.mustRunAfter(jacocoTestReport)
     }
     // plugin the test coverage execution after the tests run
     test.finalizedBy(testCoverage)
