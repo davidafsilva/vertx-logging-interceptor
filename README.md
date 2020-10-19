@@ -40,27 +40,34 @@ implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:VERSION"
 
 ### Configuration
 Similarly, as Vert.x, it provides 4 possible configurations. One for each supported logging library:
-- Java Util Logging : [pt.davidafsilva.vertx.logging.factory.VertxJULLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L25)
-- Apache Log4j: [pt.davidafsilva.vertx.logging.factory.VertxLog4jLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L27)
-- Apache Log4j2: [pt.davidafsilva.vertx.logging.factory.VertxLog4j2LogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L26)
-- slf4j: [pt.davidafsilva.vertx.logging.factory.VertxSLF4JLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L28)
 
-Choose one of the above class names (FQN) according to your runtime logging library and configure it through the 
-`vertx.logger-delegate-factory-class-name` system property. You can set it through a JVM argument:
-`-Dvertx.logger-delegate-factory-class-name=pt.davidafsilva.vertx.logging.factory.<chosen delegate factory>`.
+| Factory | Description | 
+| --- | --- | 
+| [VertxJULLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L25) | Creates loggers bound to Java Util Logging | 
+| [VertxLog4jLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L27) | Creates loggers bound to Apache Log4j (v1) | 
+| [VertxLog4j2LogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L26) | Creates loggers bound to Apache Log4j (v2) | 
+| [VertxSLF4JLogDelegateFactory](src/main/kotlin/pt/davidafsilva/vertx/logging/factory/VertxLogDelegateFactory.kt#L28) | Creates loggers bound to the available SLF4J implementation | 
+
+Choose one of the above class names (use FQN) according to your runtime logging library and configure it through the 
+`vertx.logger-delegate-factory-class-name` system property. 
+Alternatively, you can set it through a JVM argument:
+```
+-Dvertx.logger-delegate-factory-class-name=pt.davidafsilva.vertx.logging.factory.<chosen delegate factory>
+```
 
 ### Interceptor Creation
-After configuring the appropriate delegate factory, creating an interceptor can be achieved by implementing the 
-[LogInterceptor](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt) interface along with its the required
+After configuring the appropriate logger factory, creating an interceptor can be achieved by implementing the 
+[LogInterceptor](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt) interface along with the required
 methods. Optionally, you can opt for [NoOpLogInterceptor](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt#L12)
-which provides an empty skeleton for all the required methods. 
+which provides an empty skeleton for all the required methods.
 
-There are essentially two types of interceptors which only differ on their return type for the interception calls.  
-Blocking interceptors can be achieved by returning [LogPropagation.BLOCK](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt#L26)
-as the outcome of the interception call. This will effectively stop both the execution of any further existent 
-interceptors in the chain alongside with the actual logging of the underlying message.
-On the other hand, non-blocking interceptors, which do not affect any sub-sequent operations, can be achieved by 
-returning [LogPropagation.CONTINUE](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt#L26).
+There are essentially two types of interceptors, blocking and non-blocking.  
+Blocking interceptors are characterized by returning [LogPropagation.BLOCK](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt#L26)
+as the/a possible outcome of an interception call. These interceptors, upon returning `LogPropagation.BLOCK` will 
+effectively stop both the execution of any other interceptors in the chain alongside with the actual logging to the 
+underlying logger.  
+On the other hand, non-blocking interceptors do not affect any sub-sequent operations. They always return 
+[LogPropagation.CONTINUE](src/main/kotlin/pt/davidafsilva/vertx/logging/LogInterceptor.kt#L26).
 
 #### Blocking Interceptors
 ```kotlin
@@ -96,7 +103,7 @@ object BadWordLogInterceptor : NoOpLogInterceptor {
 Registering your own or built-in interceptors through the centralized `LogInterceptors` storage layer. 
 ```kotlin
 LogInterceptors.register(BadWordLogInterceptor) // applicable to all levels
-LogInterceptors.register(Level.WARN, ThreadBlockedLogInterceptor()) // built-in interceptor
+LogInterceptors.register(Level.WARN, ThreadBlockedLogInterceptor(registry)) // built-in interceptor
 LogInterceptors.register(Level.INFO, LogMessagesCounterInterceptor()) // counts all info messages
 ```
 
@@ -115,6 +122,8 @@ The exported metric has the following properties:
 | --- | --- | --- | 
 | `vertx_thread_blocked_total` | Counter | `thread`: the name of the blocked thread | 
 
+Note that the metric name can be customized by specifying the optional `metricName` constructor parameter.
+
 For the sake of illustration, the metric exported through a prometheus formatted endpoint:
 ```
 # HELP vertx_thread_blocked_total Number of thread blocks detected
@@ -122,13 +131,10 @@ For the sake of illustration, the metric exported through a prometheus formatted
 vertx_thread_blocked_total{thread="vert.x-eventloop-thread-0,5,main",} 1.0
 ```
 
-## Building and Releasing
+## Building 
 At the project root, run the following command:
 ```shell
 ./gradlew clean build
 ```
 
-After a successful build, releasing can be achieved by running:
-```shell
-./gradlew release publish
-```
+The above command will run both the tests and verification checks.
