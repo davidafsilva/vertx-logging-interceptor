@@ -104,13 +104,45 @@ object InterceptedLoggingDelegateTestSpec : Spek({
                 }
             }
         }
+
+        context("delegating null inputs") {
+            context("null message") {
+                val delegate = mockk<LogDelegate>(relaxed = true)
+                val interceptor = logInterceptor("dummy")
+                val interceptedDelegate = InterceptedLoggingDelegate("logger", delegate) { listOf(interceptor) }
+
+                interceptedDelegate.error(null)
+                it("should call the appropriate interceptor") {
+                    verify { interceptor.intercept(any(), isNull()) }
+                }
+
+                it("should delegate logging to the underlying logger") {
+                    verify { delegate.error(isNull()) }
+                }
+            }
+
+            context("null throwable") {
+                val delegate = mockk<LogDelegate>(relaxed = true)
+                val interceptor = logInterceptor("dummy")
+                val interceptedDelegate = InterceptedLoggingDelegate("logger", delegate) { listOf(interceptor) }
+
+                interceptedDelegate.error("message", null as Throwable?)
+                it("should call the appropriate interceptor") {
+                    verify { interceptor.intercept(any(), eq("message")) }
+                }
+
+                it("should delegate logging to the underlying logger") {
+                    verify { delegate.error(eq("message"), isNull()) }
+                }
+            }
+        }
     }
 })
 
 private fun Suite.testInterception(
     logLevel: LogLevel,
     logDelegateCall: (LogDelegate, TestCallInput) -> Unit,
-    interceptorCall: (LogInterceptor, TestCallInput) -> Unit
+    interceptorCall: (LogInterceptor, TestCallInput) -> Unit,
 ) {
     val nonBlockedMessage = "regular logging message"
     val blockedMessage = "blocked message"
