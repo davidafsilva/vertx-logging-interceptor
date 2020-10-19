@@ -52,6 +52,7 @@ tasks {
         violationRules {
             rule {
                 limit {
+                    // jacoco is missing inlined code: https://github.com/jacoco/jacoco/issues/654
                     minimum = 0.8.toBigDecimal()
                 }
             }
