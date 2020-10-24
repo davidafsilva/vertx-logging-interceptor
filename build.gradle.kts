@@ -1,3 +1,6 @@
+import com.jfrog.bintray.gradle.BintrayExtension
+import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
+import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import pl.allegro.tech.build.axion.release.domain.ChecksConfig
 import pl.allegro.tech.build.axion.release.domain.RepositoryConfig
@@ -16,6 +19,7 @@ plugins {
     kotlin("jvm")
     jacoco
     id("pl.allegro.tech.build.axion-release") version "1.12.1"
+    id("com.jfrog.bintray") version "1.8.5"
 }
 
 group = "pt.davidafsilva.vertx.logging"
@@ -55,6 +59,22 @@ dependencies {
     testImplementation("org.slf4j:slf4j-api:1.7.30") // slf4j
     testImplementation("log4j:log4j:1.2.17") // log4j 1.x
     testImplementation("org.apache.logging.log4j:log4j-core:2.13.3") // log4j 2.x
+}
+
+configure<BintrayExtension> {
+    user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
+    key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
+    pkg(closureOf<PackageConfig> {
+        repo = "maven"
+        name = project.name
+        userOrg = "bintray_user"
+        vcsUrl = "https://github.com/davidafsilva/vertx-logging-interceptor.git"
+        setLicenses("BSD 3-Clause")
+        version(closureOf<VersionConfig> {
+            name = project.version.toString()
+            vcsTag = project.version.toString()
+        })
+    })
 }
 
 tasks {
