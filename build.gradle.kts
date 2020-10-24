@@ -62,12 +62,13 @@ dependencies {
     testImplementation("org.apache.logging.log4j:log4j-core:2.13.3") // log4j 2.x
 }
 
-val publicationId = "bintrayPublication"
+val publicationId = "bintrayPublication" // shared between publish and bintray plugins configuration
 val githubRepo = "davidafsilva/vertx-logging-interceptor"
 val githubRepoUrl = "https://github.com/$githubRepo"
 val githubRepoCheckoutUrl = "scm:git:ssh://git@github.com/davidafsilva/vertx-logging-interceptor.git"
 val licenseName = "BSD 3-Clause"
 val licenseUrl = "https://opensource.org/licenses/BSD-3-Clause"
+
 configure<PublishingExtension> {
     publications {
         create<MavenPublication>(publicationId) {
@@ -158,9 +159,9 @@ tasks {
 }
 
 fun versionIncrementStrategy(): String {
-    return project.findProperty("release.versionIncrementer")?.toString()
-        ?: resolveVersionIncrementStrategyFromLastCommit()
-        ?: "incrementMinor"
+    return project.findProperty("release.versionIncrementer")?.toString() // 1. command line parameter
+        ?: resolveVersionIncrementStrategyFromLastCommit() // 2. last commit prefix [major|..]
+        ?: "incrementMinor" // 3. defaults to minor
 }
 
 fun resolveVersionIncrementStrategyFromLastCommit(): String? {
