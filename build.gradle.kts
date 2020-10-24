@@ -16,7 +16,6 @@ plugins {
     kotlin("jvm")
     jacoco
     id("pl.allegro.tech.build.axion-release") version "1.12.1"
-    `maven-publish`
 }
 
 group = "pt.davidafsilva.vertx.logging"
