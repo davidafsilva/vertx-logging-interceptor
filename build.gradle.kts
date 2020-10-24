@@ -11,12 +11,16 @@ repositories {
 
 plugins {
     kotlin("jvm")
-    `maven-publish`
     jacoco
+    id("pl.allegro.tech.build.axion-release") version "1.12.1"
+    `maven-publish`
 }
 
 group = "pt.davidafsilva.vertx.logging"
-version = "0.0.1-SNAPSHOT"
+scmVersion {
+    versionIncrementer(versionIncrementStrategy())
+}
+version = scmVersion.version
 
 dependencies {
     val vertxVersion: String by project
@@ -73,4 +77,31 @@ tasks {
             includeEngines("spek2")
         }
     }
+}
+
+fun versionIncrementStrategy(): String {
+    return project.findProperty("release.versionIncrementer")?.toString()
+        ?: resolveVersionIncrementStrategyFromLastCommit()
+        ?: "incrementMinor"
+}
+
+fun resolveVersionIncrementStrategyFromLastCommit(): String? {
+    val cmd = "git log -1 --pretty=format:%B"
+    val process = Runtime.getRuntime().exec(cmd)
+    if (process.waitFor() != 0) return null
+
+    var result: String? = null
+    val commitMessage = String(process.inputStream.readBytes())
+    if (commitMessage.startsWith('[')) {
+        val strategy = commitMessage.substring(1, commitMessage.indexOf(']'))
+        result = when (strategy.toLowerCase()) {
+            "minor", "patch", "major", "prerelease" -> strategy.toLowerCase().capitalize()
+            else -> {
+                logger.error("invalid version strategy on commit: $strategy")
+                null
+            }
+        }
+    }
+
+    return result
 }
