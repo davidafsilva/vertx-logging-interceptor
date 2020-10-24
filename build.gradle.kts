@@ -1,4 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import pl.allegro.tech.build.axion.release.domain.ChecksConfig
+import pl.allegro.tech.build.axion.release.domain.RepositoryConfig
+import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 
 repositories {
     mavenLocal()
@@ -19,6 +22,15 @@ plugins {
 group = "pt.davidafsilva.vertx.logging"
 scmVersion {
     versionIncrementer(versionIncrementStrategy())
+    tag(closureOf<TagNameSerializationConfig> {
+        prefix = ""
+    })
+    checks(closureOf<ChecksConfig> {
+        uncommittedChanges = false
+    })
+    repository(closureOf<RepositoryConfig> {
+        pushTagsOnly = true
+    })
 }
 version = scmVersion.version
 
