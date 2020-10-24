@@ -20,6 +20,7 @@ plugins {
     jacoco
     id("pl.allegro.tech.build.axion-release") version "1.12.1"
     id("com.jfrog.bintray") version "1.8.5"
+    `maven-publish`
 }
 
 group = "pt.davidafsilva.vertx.logging"
@@ -61,19 +62,65 @@ dependencies {
     testImplementation("org.apache.logging.log4j:log4j-core:2.13.3") // log4j 2.x
 }
 
+val publicationId = "bintrayPublication"
+val githubRepo = "davidafsilva/vertx-logging-interceptor"
+val githubRepoUrl = "https://github.com/$githubRepo"
+val githubRepoCheckoutUrl = "scm:git:ssh://git@github.com/davidafsilva/vertx-logging-interceptor.git"
+val licenseName = "BSD 3-Clause"
+val licenseUrl = "https://opensource.org/licenses/BSD-3-Clause"
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>(publicationId) {
+            from(components["java"])
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+            pom {
+                name.set(project.name)
+                description.set(githubRepoUrl)
+                url.set(githubRepoUrl)
+                inceptionYear.set("2020")
+                licenses {
+                    license {
+                        name.set(licenseName)
+                        url.set(licenseUrl)
+                        distribution.set("dist")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("davidafsilva")
+                        name.set("David Silva")
+                    }
+                }
+                scm {
+                    connection.set(githubRepoCheckoutUrl)
+                    developerConnection.set(githubRepoCheckoutUrl)
+                    url.set(githubRepoUrl)
+                }
+            }
+        }
+    }
+}
+
 configure<BintrayExtension> {
     user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
     key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
     pkg(closureOf<PackageConfig> {
         repo = "maven"
         name = project.name
-        userOrg = "bintray_user"
-        vcsUrl = "https://github.com/davidafsilva/vertx-logging-interceptor.git"
-        setLicenses("BSD 3-Clause")
+        githubRepo = githubRepoUrl
+        websiteUrl = githubRepoUrl
+        vcsUrl = githubRepoCheckoutUrl
+        issueTrackerUrl = "$githubRepoUrl/issues"
+        githubReleaseNotesFile = "README.md"
+        setLabels("kotlin", "vert.x", "logging", "interceptor")
+        setLicenses(licenseName)
         version(closureOf<VersionConfig> {
             name = project.version.toString()
             vcsTag = project.version.toString()
         })
+        setPublications(publicationId)
     })
 }
 
