@@ -25,7 +25,6 @@ plugins {
 
 group = "pt.davidafsilva.vertx.logging"
 scmVersion {
-    versionIncrementer(versionIncrementStrategy())
     tag(closureOf<TagNameSerializationConfig> {
         prefix = ""
     })
@@ -156,31 +155,4 @@ tasks {
             includeEngines("spek2")
         }
     }
-}
-
-fun versionIncrementStrategy(): String {
-    return project.findProperty("release.versionIncrementer")?.toString() // 1. command line parameter
-        ?: resolveVersionIncrementStrategyFromLastCommit() // 2. last commit prefix [major|..]
-        ?: "incrementMinor" // 3. defaults to minor
-}
-
-fun resolveVersionIncrementStrategyFromLastCommit(): String? {
-    val cmd = "git log -1 --pretty=format:%B"
-    val process = Runtime.getRuntime().exec(cmd)
-    if (process.waitFor() != 0) return null
-
-    var result: String? = null
-    val commitMessage = String(process.inputStream.readBytes())
-    if (commitMessage.startsWith('[')) {
-        val strategy = commitMessage.substring(1, commitMessage.indexOf(']'))
-        result = when (strategy.toLowerCase()) {
-            "minor", "patch", "major", "prerelease" -> strategy.toLowerCase().capitalize()
-            else -> {
-                logger.error("invalid version strategy on commit: $strategy")
-                null
-            }
-        }
-    }
-
-    return result
 }
