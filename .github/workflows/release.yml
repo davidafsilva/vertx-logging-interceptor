@@ -44,7 +44,7 @@ jobs:
       id: release
       run: |
         ./gradlew release \
-          -Prelease.versionIncrementer=increment${{ github.event.inputs.version }} \
+          -Prelease.versionIncrementer=increment${{ github.event.inputs.versionStrategy }} \
           -Prelease.customUsername=${{ github.actor }} \
           -Prelease.customPassword=${{ github.token }}
  
