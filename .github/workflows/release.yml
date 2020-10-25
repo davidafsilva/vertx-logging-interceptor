@@ -1,0 +1,53 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      versionStrategy:
+        description: |
+          The version increment strategy. One of
+          - Patch
+          - Minor
+          - Major
+          - Prerelease
+        default: Minor
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+        java-package: jdk
+        architecture: x64
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Run build
+      id: build
+      run: ./gradlew build
+    
+    - name: Get pre-release version
+      id: pre-prelease
+      run: ./gradlew currentVersion
+    
+    - name: Release new version
+      id: release
+      run: |
+        ./gradlew release \
+          -Prelease.versionIncrementer=increment${{ github.event.inputs.version }} \
+          -Prelease.customUsername=${{ github.actor }} \
+          -Prelease.customPassword=${{ github.token }}
+ 
+    - name: Get released version
+      id: post-prelease
+      run: ./gradlew currentVersion
