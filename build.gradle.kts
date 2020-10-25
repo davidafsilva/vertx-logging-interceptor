@@ -108,6 +108,7 @@ configure<BintrayExtension> {
     key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
     pkg(closureOf<PackageConfig> {
         repo = "maven"
+        user = "davidafsilva"
         name = project.name
         githubRepo = githubRepoUrl
         websiteUrl = githubRepoUrl
