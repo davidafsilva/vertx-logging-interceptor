@@ -1,8 +1,9 @@
 name: Publish release artifacts
 
 on:
-  create:
-    tags: 'v**'
+  push:
+    tags:
+    - 'v*'
 
 jobs:
   build:
