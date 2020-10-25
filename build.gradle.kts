@@ -114,7 +114,6 @@ configure<BintrayExtension> {
         websiteUrl = githubRepoUrl
         vcsUrl = githubRepoCheckoutUrl
         issueTrackerUrl = "$githubRepoUrl/issues"
-        githubReleaseNotesFile = "README.md"
         setLabels("kotlin", "vert.x", "logging", "interceptor")
         setLicenses(licenseName)
         version(closureOf<VersionConfig> {
