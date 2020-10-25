@@ -3,7 +3,7 @@ name: Publish release artifacts
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
 
 
     - name: Publish to Bintray
-      run: ./gradlew bintrayUpload \
+      run: ./gradlew bintrayUpload
       env:
         BINTRAY_USER: ${{ github.actor }}
         BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
