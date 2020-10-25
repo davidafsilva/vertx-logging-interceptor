@@ -26,8 +26,7 @@ plugins {
 group = "pt.davidafsilva.vertx.logging"
 scmVersion {
     tag(closureOf<TagNameSerializationConfig> {
-        prefix = "v"
-        versionSeparator = ""
+        prefix = ""
     })
     checks(closureOf<ChecksConfig> {
         uncommittedChanges = false
