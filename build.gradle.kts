@@ -64,7 +64,7 @@ dependencies {
 val publicationId = "bintrayPublication" // shared between publish and bintray plugins configuration
 val githubRepo = "davidafsilva/vertx-logging-interceptor"
 val githubRepoUrl = "https://github.com/$githubRepo"
-val githubRepoCheckoutUrl = "scm:git:ssh://git@github.com/davidafsilva/vertx-logging-interceptor.git"
+val githubRepoCheckoutUrl = "scm:git:ssh://git@github.com:davidafsilva/vertx-logging-interceptor.git"
 val licenseName = "BSD 3-Clause"
 val licenseUrl = "https://opensource.org/licenses/BSD-3-Clause"
 
