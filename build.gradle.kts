@@ -106,6 +106,8 @@ configure<PublishingExtension> {
 configure<BintrayExtension> {
     user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
     key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
+    publish = true
+    setPublications(publicationId)
     pkg(closureOf<PackageConfig> {
         repo = "maven"
         user = "davidafsilva"
@@ -121,7 +123,6 @@ configure<BintrayExtension> {
             name = project.version.toString()
             vcsTag = project.version.toString()
         })
-        setPublications(publicationId)
     })
 }
 
