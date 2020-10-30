@@ -106,19 +106,18 @@ configure<PublishingExtension> {
 configure<BintrayExtension> {
     user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
     key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
-    publish = true
+    //publish = true
     setPublications(publicationId)
     pkg(closureOf<PackageConfig> {
         repo = "maven"
-        userOrg = "davidafsilva"
         name = project.name
         desc = "Logging Interceptor Plugin for Vert.x"
-        githubRepo = githubRepoId
-        websiteUrl = githubRepoUrl
-        vcsUrl = githubRepoCheckoutUrl
-        issueTrackerUrl = "$githubRepoUrl/issues"
         setLabels("kotlin", "vert.x", "logging", "interceptor")
         setLicenses(licenseName)
+        websiteUrl = githubRepoUrl
+        githubRepo = githubRepoId
+        vcsUrl = githubRepoCheckoutUrl
+        issueTrackerUrl = "$githubRepoUrl/issues"
         version(closureOf<VersionConfig> {
             name = project.version.toString()
             vcsTag = project.version.toString()
