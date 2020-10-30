@@ -110,7 +110,7 @@ configure<BintrayExtension> {
     setPublications(publicationId)
     pkg(closureOf<PackageConfig> {
         repo = "maven"
-        user = "davidafsilva"
+        userOrg = "davidafsilva"
         name = project.name
         desc = "Logging Interceptor Plugin for Vert.x"
         githubRepo = githubRepoId
