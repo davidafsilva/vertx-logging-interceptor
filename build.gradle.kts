@@ -62,8 +62,8 @@ dependencies {
 }
 
 val publicationId = "bintrayPublication" // shared between publish and bintray plugins configuration
-val githubRepo = "davidafsilva/vertx-logging-interceptor"
-val githubRepoUrl = "https://github.com/$githubRepo"
+val githubRepoId = "davidafsilva/vertx-logging-interceptor"
+val githubRepoUrl = "https://github.com/$githubRepoId"
 val githubRepoCheckoutUrl = "https://github.com/davidafsilva/vertx-logging-interceptor.git"
 val licenseName = "BSD 3-Clause"
 val licenseUrl = "https://opensource.org/licenses/BSD-3-Clause"
@@ -110,7 +110,8 @@ configure<BintrayExtension> {
         repo = "maven"
         user = "davidafsilva"
         name = project.name
-        githubRepo = githubRepoUrl
+        desc = "Logging Interceptor Plugin for Vert.x"
+        githubRepo = githubRepoId
         websiteUrl = githubRepoUrl
         vcsUrl = githubRepoCheckoutUrl
         issueTrackerUrl = "$githubRepoUrl/issues"
