@@ -4,12 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       versionStrategy:
-        description: >
-          The version increment strategy. One of:<br/>
-          - Patch
-          - Minor
-          - Major
-          - Prerelease
+        description: 'The version increment strategy. One of: Prerelease, Patch, Minor, Major'
         default: Minor
         required: true
 
