@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       versionStrategy:
-        description: >
-          The version increment strategy. One of
+        description: |
+          |
+          The version increment strategy. One of:
           - Patch
           - Minor
           - Major
