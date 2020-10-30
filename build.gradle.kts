@@ -104,6 +104,7 @@ configure<PublishingExtension> {
 }
 
 configure<BintrayExtension> {
+    user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
     key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
     pkg(closureOf<PackageConfig> {
         repo = "maven"
