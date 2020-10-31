@@ -121,7 +121,7 @@ configure<BintrayExtension> {
         issueTrackerUrl = "$githubRepoUrl/issues"
         version(closureOf<VersionConfig> {
             name = project.version.toString()
-            vcsTag = project.version.toString()
+            vcsTag = "v${project.version.toString()}"
         })
     })
 }
