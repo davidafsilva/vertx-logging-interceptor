@@ -18,9 +18,9 @@ repositories {
 plugins {
     kotlin("jvm")
     jacoco
-    id("pl.allegro.tech.build.axion-release") version "1.12.1"
-    id("com.jfrog.bintray") version "1.8.5"
     `maven-publish`
+    id("pl.allegro.tech.build.axion-release")
+    id("com.jfrog.bintray")
 }
 
 group = "pt.davidafsilva.vertx.logging"
@@ -140,6 +140,13 @@ tasks {
                     minimum = 0.8.toBigDecimal()
                 }
             }
+        }
+    }
+
+    withType<JacocoReport> {
+        reports {
+            xml.isEnabled = true
+            html.isEnabled = true
         }
     }
 
