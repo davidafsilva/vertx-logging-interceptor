@@ -6,11 +6,18 @@ import pl.allegro.tech.build.axion.release.domain.ChecksConfig
 import pl.allegro.tech.build.axion.release.domain.RepositoryConfig
 import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    google()
     maven("https://dl.bintray.com/spekframework/spek")
     maven("https://dl.bintray.com/robfletcher/maven")
     maven("https://dl.bintray.com/christophsturm/maven")
