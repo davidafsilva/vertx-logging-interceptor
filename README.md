@@ -1,7 +1,8 @@
 # Vertx Logging Interceptor 
 
-![Latest Release](https://img.shields.io/bintray/v/davidafsilva/maven/vertx-logging-interceptor?color=brightgreen&label=Latest%20Relase&style=flat-square)
+![Master Build Status](https://img.shields.io/github/workflow/status/davidafsilva/vertx-logging-interceptor/Master%20Build?label=Build&style=flat-square)
 ![Coverage Report](https://img.shields.io/coveralls/github/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=Coverage&style=flat-square)
+![Latest Release](https://img.shields.io/bintray/v/davidafsilva/maven/vertx-logging-interceptor?color=brightgreen&label=Latest%20Relase&style=flat-square)
 ![License](https://img.shields.io/github/license/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=License&logo=License&style=flat-square)
 
 
