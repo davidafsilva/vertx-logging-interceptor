@@ -19,6 +19,7 @@ plugins {
     kotlin("jvm")
     jacoco
     `maven-publish`
+    id("com.github.nbaztec.coveralls-jacoco")
     id("pl.allegro.tech.build.axion-release")
     id("com.jfrog.bintray")
 }
