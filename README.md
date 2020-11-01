@@ -1,5 +1,9 @@
 # Vertx Logging Interceptor 
 
+![Latest Release](https://img.shields.io/bintray/v/davidafsilva/maven/vertx-logging-interceptor?color=brightgreen&label=Latest%20Relase&logo=Latest%20Release&style=flat-square)
+![License](https://img.shields.io/github/license/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=License&logo=License&style=flat-square)
+
+
 This small library plugs into Vert.x's logging delegation by leveraging its flexible configuration, allowing 
 third-party interceptors to be built and plugged into the application logging mechanism.
 
@@ -23,18 +27,18 @@ third-party interceptors to be built and plugged into the application logging me
 #### Gradle
 Groovy:
 ```groovy
-compile "pt.davidafsilva.vertx.logging:vertx-logging-interceptor:VERSION"
+compile "pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.0"
 ```
 Kotlin DSL:
 ```kotlin
-implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:VERSION")
+implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.0")
 ```
 #### Maven
 ```xml
 <dependency>
   <groupId>pt.davidafsilva.vertx.logging</groupId>
   <artifactId>vertx-logging-interceptor</artifactId>
-  <version>VERSION</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
