@@ -1,7 +1,9 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
 import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.kt3k.gradle.plugin.CoverallsPluginExtension
 import pl.allegro.tech.build.axion.release.domain.ChecksConfig
 import pl.allegro.tech.build.axion.release.domain.RepositoryConfig
 import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
@@ -120,6 +122,10 @@ configure<BintrayExtension> {
             vcsTag = "v${project.version.toString()}"
         })
     })
+}
+
+configure<CoverallsPluginExtension> {
+    sourceDirs = sourceDirs + "src/main/kotlin"
 }
 
 tasks {
