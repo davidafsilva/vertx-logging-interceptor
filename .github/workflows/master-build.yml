@@ -22,6 +22,6 @@ jobs:
     
     - name: Run build
       run: ./gradlew build 
-    
-#    - name: Update coveralls coverage report
-#      run: ./gradlew coverallsJacoco
+
+    - name: Update coveralls coverage report
+      run: ./gradlew coveralls
