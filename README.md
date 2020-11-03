@@ -1,9 +1,9 @@
 # Vertx Logging Interceptor 
 
-![Master Build Status](https://img.shields.io/github/workflow/status/davidafsilva/vertx-logging-interceptor/Master%20Build?label=Build&style=flat-square)
-![Coverage Report](https://img.shields.io/coveralls/github/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=Coverage&style=flat-square)
-![Latest Release](https://img.shields.io/bintray/v/davidafsilva/maven/vertx-logging-interceptor?color=brightgreen&label=Latest%20Relase&style=flat-square)
-![License](https://img.shields.io/github/license/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=License&logo=License&style=flat-square)
+[![Master Build Status](https://img.shields.io/github/workflow/status/davidafsilva/vertx-logging-interceptor/Master%20Build?label=Build&style=flat-square)](https://github.com/davidafsilva/vertx-logging-interceptor/actions?query=workflow%3A%22Master+Build%22+branch%3Amaster)
+[![Coverage Report](https://img.shields.io/coveralls/github/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=Coverage&style=flat-square)](https://coveralls.io/github/davidafsilva/vertx-logging-interceptor)
+[![Latest Release](https://img.shields.io/bintray/v/davidafsilva/maven/vertx-logging-interceptor?color=brightgreen&label=Latest%20Relase&style=flat-square)](https://bintray.com/beta/#/davidafsilva/maven/vertx-logging-interceptor)
+[![License](https://img.shields.io/github/license/davidafsilva/vertx-logging-interceptor?color=brightgreen&label=License&logo=License&style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
 
 
 This small library plugs into Vert.x's logging delegation by leveraging its flexible configuration, allowing 
