@@ -1,7 +1,6 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
 import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.kt3k.gradle.plugin.CoverallsPluginExtension
 import pl.allegro.tech.build.axion.release.domain.ChecksConfig
@@ -126,6 +125,10 @@ configure<BintrayExtension> {
 
 configure<CoverallsPluginExtension> {
     sourceDirs = sourceDirs + "src/main/kotlin"
+}
+
+configure<JavaPluginExtension> {
+    withSourcesJar()
 }
 
 tasks {
