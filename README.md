@@ -37,7 +37,7 @@ repositories {
 }
 ...
 dependencies {
-  compile "pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.1"
+  compile "pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.2"
 }
 ```
 Kotlin DSL:
@@ -47,7 +47,7 @@ repositories {
 }
 ...
 dependencies {
-  implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.1")
+  implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.2")
 }
 ```
 #### Maven
@@ -67,7 +67,7 @@ dependencies {
   <dependency>
     <groupId>pt.davidafsilva.vertx.logging</groupId>
     <artifactId>vertx-logging-interceptor</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
   </dependency>
 </dependencies>
 ```
