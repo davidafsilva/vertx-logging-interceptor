@@ -1,7 +1,7 @@
 
 # v0.1.2
 #### Enhancement
-  - Adds support for Java 8 clients
+  - Adds support for JVM 8 (52.0) clients
 
 
 # v0.1.1
