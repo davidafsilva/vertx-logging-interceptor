@@ -4,10 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       versionStrategy:
-        description: 'The version increment strategy. One of: Prerelease, Patch, Minor, Major'
+        description: 'The version increment strategy'
         default: Minor
         required: true
-
+        type: choice
+        options:
+          - Prerelease
+          - Patch
+          - Minor
+          - Major
 jobs:
   create-tag:
     runs-on: ubuntu-latest
