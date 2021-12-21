@@ -27,7 +27,7 @@ scmVersion {
         versionSeparator = ""
     })
     checks(closureOf<ChecksConfig> {
-        setUncommittedChanges(false)
+        isUncommittedChanges = false
     })
     repository(closureOf<RepositoryConfig> {
         pushTagsOnly = true
@@ -121,7 +121,7 @@ configure<BintrayExtension> {
         issueTrackerUrl = "$githubRepoUrl/issues"
         version(closureOf<VersionConfig> {
             name = project.version.toString()
-            vcsTag = "v${project.version.toString()}"
+            vcsTag = "v${project.version}"
         })
     })
 }
@@ -154,8 +154,8 @@ tasks {
 
     withType<JacocoReport> {
         reports {
-            xml.isEnabled = true
-            html.isEnabled = true
+            xml.required.set(true)
+            html.required.set(true)
         }
     }
 
