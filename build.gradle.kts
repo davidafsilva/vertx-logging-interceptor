@@ -178,9 +178,4 @@ tasks {
 fun RepositoryHandler.registerRepositories() {
     mavenLocal()
     mavenCentral()
-    jcenter()
-    google()
-    maven("https://dl.bintray.com/spekframework/spek")
-    maven("https://dl.bintray.com/robfletcher/maven")
-    maven("https://dl.bintray.com/christophsturm/maven")
 }
