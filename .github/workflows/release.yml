@@ -67,8 +67,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingGpgKeyId: ${{ secrets.GPG_KEY_ID }}
           ORG_GRADLE_PROJECT_signingGpgKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
 
-#      - name: Publish to Bintray
-#        run: ./gradlew bintrayUpload
-#        env:
-#          BINTRAY_USER: ${{ github.actor }}
-#          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
+      - name: Publish artifacts
+        run: ./gradlew publish
+        env:
+          OSSRH_USER: ${{ github.actor }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
