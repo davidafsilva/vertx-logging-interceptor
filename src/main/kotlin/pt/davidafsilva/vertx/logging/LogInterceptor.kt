@@ -10,16 +10,9 @@ interface LogInterceptor {
 }
 
 interface NoOpLogInterceptor : LogInterceptor {
-    @JvmDefault
     override fun intercept(logger: String, message: Any?): LogPropagation = CONTINUE
-
-    @JvmDefault
     override fun intercept(logger: String, message: Any?, params: Array<Any?>): LogPropagation = CONTINUE
-
-    @JvmDefault
     override fun intercept(logger: String, message: Any?, t: Throwable): LogPropagation = CONTINUE
-
-    @JvmDefault
     override fun intercept(logger: String, message: Any?, t: Throwable, params: Array<Any?>): LogPropagation = CONTINUE
 }
 

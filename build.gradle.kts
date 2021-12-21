@@ -134,7 +134,7 @@ configure<JavaPluginExtension> {
 tasks {
     withType<KotlinCompile>().configureEach {
         kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=enable")
+        kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=all")
     }
 
     withType<JacocoCoverageVerification> {
