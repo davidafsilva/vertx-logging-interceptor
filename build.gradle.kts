@@ -16,7 +16,7 @@ plugins {
     id("pl.allegro.tech.build.axion-release")
 }
 
-group = "pt.davidafsilva.vertx.logging"
+group = "pt.davidafsilva.vertx"
 scmVersion {
     tag(closureOf<TagNameSerializationConfig> {
         prefix = "v"
