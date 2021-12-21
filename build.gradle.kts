@@ -67,17 +67,12 @@ configure<JavaPluginExtension> {
 configure<PublishingExtension> {
     repositories {
         maven {
-            name = "SonatypeStaging"
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USER")
-                password = System.getenv("OSSRH_TOKEN")
+            name = "Sonatype"
+            val repository = when {
+                version.toString().endsWith("-SNAPSHOT") -> "/content/repositories/snapshots/"
+                else -> "/service/local/staging/deploy/maven2/"
             }
-        }
-
-        maven {
-            name = "SonatypeSnapshots"
-            setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            setUrl("https://s01.oss.sonatype.org/$repository")
             credentials {
                 username = System.getenv("OSSRH_USER")
                 password = System.getenv("OSSRH_TOKEN")
