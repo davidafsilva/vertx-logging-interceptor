@@ -60,6 +60,13 @@ jobs:
       - name: Build artifacts
         run: ./gradlew clean build -x test -x check
 
+      - name: Sign artifacts
+        run: ./gradlew sign
+        env:
+          ORG_GRADLE_PROJECT_signingGpgKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingGpgKeyId: ${{ secrets.GPG_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingGpgKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
+
 #      - name: Publish to Bintray
 #        run: ./gradlew bintrayUpload
 #        env:
