@@ -12,6 +12,7 @@ plugins {
     kotlin("jvm")
     jacoco
     `maven-publish`
+    signing
     id("com.github.kt3k.coveralls")
     id("pl.allegro.tech.build.axion-release")
 }
@@ -58,9 +59,33 @@ dependencies {
     testImplementation("org.apache.logging.log4j:log4j-core:$log4j2Version") // log4j 2.x
 }
 
-configure<PublishingExtension> {
-    publications {
+configure<JavaPluginExtension> {
+    withSourcesJar()
+    withJavadocJar()
+}
 
+configure<PublishingExtension> {
+    repositories {
+        maven {
+            name = "OSSRH-STAGING"
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USER")
+                password = System.getenv("OSSRH_TOKEN")
+            }
+        }
+
+        maven {
+            name = "OSSRH-SNAPSHOTS"
+            setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            credentials {
+                username = System.getenv("OSSRH_USER")
+                password = System.getenv("OSSRH_TOKEN")
+            }
+        }
+    }
+
+    publications {
         create<MavenPublication>("jarsPublication") {
             from(components["java"])
             groupId = project.group.toString()
@@ -98,13 +123,19 @@ configure<PublishingExtension> {
     }
 }
 
-configure<CoverallsPluginExtension> {
-    sourceDirs = sourceDirs + "src/main/kotlin"
+configure<SigningExtension> {
+    val signingGpgKey: String? by project
+    val signingGpgKeyId: String? by project
+    val signingGpgKeyPassword: String? by project
+    if (signingGpgKey != null && signingGpgKeyId != null && signingGpgKeyPassword != null) {
+        useInMemoryPgpKeys(signingGpgKeyId, signingGpgKey, signingGpgKeyPassword)
+    }
+
+    sign(publishing.publications.getByName("jarsPublication"))
 }
 
-configure<JavaPluginExtension> {
-    withSourcesJar()
-    withJavadocJar()
+configure<CoverallsPluginExtension> {
+    sourceDirs = sourceDirs + "src/main/kotlin"
 }
 
 tasks {
