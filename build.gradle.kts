@@ -77,13 +77,13 @@ configure<PublishingExtension> {
                     license {
                         name.set("BSD 3-Clause")
                         url.set("https://opensource.org/licenses/BSD-3-Clause")
-                        distribution.set("dist")
                     }
                 }
                 developers {
                     developer {
                         id.set("davidafsilva")
                         name.set("David Silva")
+                        url.set("https://github.com/davidafsilva")
                     }
                 }
                 scm {
