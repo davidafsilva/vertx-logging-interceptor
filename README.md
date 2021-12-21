@@ -33,21 +33,21 @@ third-party interceptors to be built and plugged into the application logging me
 Groovy:
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 ...
 dependencies {
-  compile "pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.2"
+  compile "pt.davidafsilva.vertx:vertx-logging-interceptor:0.1.3"
 }
 ```
 Kotlin DSL:
 ```kotlin
 repositories {
-    jcenter()
+    mavenCentral()
 }
 ...
 dependencies {
-  implementation("pt.davidafsilva.vertx.logging:vertx-logging-interceptor:0.1.2")
+  implementation("pt.davidafsilva.vertx:vertx-logging-interceptor:0.1.3")
 }
 ```
 #### Maven
@@ -65,9 +65,9 @@ dependencies {
 ...
 <dependencies>
   <dependency>
-    <groupId>pt.davidafsilva.vertx.logging</groupId>
+    <groupId>pt.davidafsilva.vertx</groupId>
     <artifactId>vertx-logging-interceptor</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
   </dependency>
 </dependencies>
 ```
