@@ -1,6 +1,3 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
-import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.kt3k.gradle.plugin.CoverallsPluginExtension
 import pl.allegro.tech.build.axion.release.domain.ChecksConfig
@@ -17,7 +14,6 @@ plugins {
     `maven-publish`
     id("com.github.kt3k.coveralls")
     id("pl.allegro.tech.build.axion-release")
-    id("com.jfrog.bintray")
 }
 
 group = "pt.davidafsilva.vertx.logging"
@@ -62,29 +58,25 @@ dependencies {
     testImplementation("org.apache.logging.log4j:log4j-core:$log4j2Version") // log4j 2.x
 }
 
-val publicationId = "bintrayPublication" // shared between publish and bintray plugins configuration
-val githubRepoId = "davidafsilva/vertx-logging-interceptor"
-val githubRepoUrl = "https://github.com/$githubRepoId"
-val githubRepoCheckoutUrl = "$githubRepoUrl.git"
-val licenseName = "BSD 3-Clause"
-val licenseUrl = "https://opensource.org/licenses/BSD-3-Clause"
-
 configure<PublishingExtension> {
     publications {
-        create<MavenPublication>(publicationId) {
+
+        create<MavenPublication>("jarsPublication") {
             from(components["java"])
             groupId = project.group.toString()
             artifactId = project.name
             version = project.version.toString()
             pom {
+                val githubRepoUrl = "https://github.com/davidafsilva/vertx-logging-interceptor"
+
                 name.set(project.name)
-                description.set(githubRepoUrl)
-                url.set(githubRepoUrl)
+                description.set("https://github.com/davidafsilva/vertx-logging-interceptor")
+                url.set("https://github.com/davidafsilva/vertx-logging-interceptor")
                 inceptionYear.set("2020")
                 licenses {
                     license {
-                        name.set(licenseName)
-                        url.set(licenseUrl)
+                        name.set("BSD 3-Clause")
+                        url.set("https://opensource.org/licenses/BSD-3-Clause")
                         distribution.set("dist")
                     }
                 }
@@ -95,6 +87,8 @@ configure<PublishingExtension> {
                     }
                 }
                 scm {
+                    val githubRepoCheckoutUrl = "$githubRepoUrl.git"
+
                     connection.set(githubRepoCheckoutUrl)
                     developerConnection.set(githubRepoCheckoutUrl)
                     url.set(githubRepoUrl)
@@ -102,28 +96,6 @@ configure<PublishingExtension> {
             }
         }
     }
-}
-
-configure<BintrayExtension> {
-    user = project.findProperty("bintray.user")?.toString() ?: System.getenv("BINTRAY_USER")
-    key = project.findProperty("bintray.key")?.toString() ?: System.getenv("BINTRAY_KEY")
-    publish = true
-    setPublications(publicationId)
-    pkg(closureOf<PackageConfig> {
-        repo = "maven"
-        name = project.name
-        desc = "Logging Interceptor Plugin for Vert.x"
-        setLabels("kotlin", "vert.x", "logging", "interceptor")
-        setLicenses(licenseName)
-        websiteUrl = githubRepoUrl
-        githubRepo = githubRepoId
-        vcsUrl = githubRepoCheckoutUrl
-        issueTrackerUrl = "$githubRepoUrl/issues"
-        version(closureOf<VersionConfig> {
-            name = project.version.toString()
-            vcsTag = "v${project.version}"
-        })
-    })
 }
 
 configure<CoverallsPluginExtension> {
