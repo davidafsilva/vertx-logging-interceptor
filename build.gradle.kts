@@ -54,9 +54,12 @@ dependencies {
     testImplementation("io.strikt:strikt-core:$striktVersion")
 
     // logging implementations for testing
-    testImplementation("org.slf4j:slf4j-api:1.7.30") // slf4j
-    testImplementation("log4j:log4j:1.2.17") // log4j 1.x
-    testImplementation("org.apache.logging.log4j:log4j-core:2.13.3") // log4j 2.x
+    val slf4jVersion: String by project
+    val log4jVersion: String by project
+    val log4j2Version: String by project
+    testImplementation("org.slf4j:slf4j-api:$slf4jVersion") // slf4j
+    testImplementation("log4j:log4j:$log4jVersion") // log4j 1.x
+    testImplementation("org.apache.logging.log4j:log4j-core:$log4j2Version") // log4j 2.x
 }
 
 val publicationId = "bintrayPublication" // shared between publish and bintray plugins configuration
