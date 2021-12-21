@@ -68,7 +68,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingGpgKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
 
       - name: Publish artifacts
-        run: ./gradlew publishAllPublicationsToSonatypeStagingRepository
+        run: ./gradlew publishArtifactsPublicationToSonatypeStagingRepository
         env:
           OSSRH_USER: ${{ github.actor }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}

@@ -86,7 +86,7 @@ configure<PublishingExtension> {
     }
 
     publications {
-        create<MavenPublication>("jarsPublication") {
+        create<MavenPublication>("artifacts") {
             from(components["java"])
             groupId = project.group.toString()
             artifactId = project.name
@@ -131,7 +131,7 @@ configure<SigningExtension> {
         useInMemoryPgpKeys(signingGpgKeyId, signingGpgKey, signingGpgKeyPassword)
     }
 
-    sign(publishing.publications.getByName("jarsPublication"))
+    sign(publishing.publications.getByName("artifacts"))
 }
 
 configure<CoverallsPluginExtension> {
