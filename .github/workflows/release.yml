@@ -74,5 +74,5 @@ jobs:
       - name: Publish artifacts
         run: ./gradlew publishArtifactsPublicationToSonatypeRepository
         env:
-          OSSRH_USER: ${{ github.actor }}
+          OSSRH_USER: ${{ secrets.OSSRH_USER }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
