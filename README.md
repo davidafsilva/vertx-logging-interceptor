@@ -26,7 +26,7 @@ third-party interceptors to be built and plugged into the application logging me
 ## Usage
 
 ### Import
-1. Add jCenter repository to your configuration
+1. Add maven central repository to your configuration
 2. Import the library
 
 #### Gradle
