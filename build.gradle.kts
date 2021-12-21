@@ -27,7 +27,7 @@ scmVersion {
         versionSeparator = ""
     })
     checks(closureOf<ChecksConfig> {
-        uncommittedChanges = false
+        setUncommittedChanges(false)
     })
     repository(closureOf<RepositoryConfig> {
         pushTagsOnly = true
