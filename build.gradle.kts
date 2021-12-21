@@ -132,6 +132,7 @@ configure<CoverallsPluginExtension> {
 
 configure<JavaPluginExtension> {
     withSourcesJar()
+    withJavadocJar()
 }
 
 tasks {
