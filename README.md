@@ -21,7 +21,7 @@ third-party interceptors to be built and plugged into the application logging me
   + [Registering Interceptors](#registering-interceptors)
 * [Built-In Interceptors](#built-in-interceptors)
   + [ThreadBlockedLogInterceptor](#threadblockedloginterceptor)
-* [Building & Releasing](#building---releasing)
+* [Building](#building)
 
 ## Usage
 
@@ -31,25 +31,15 @@ third-party interceptors to be built and plugged into the application logging me
 
 #### Gradle
 Groovy:
-```groovy
-repositories {
-    mavenCentral()
-}
-...
-dependencies {
-  compile "pt.davidafsilva.vertx:vertx-logging-interceptor:0.1.3"
-}
-```
-Kotlin DSL:
 ```kotlin
 repositories {
     mavenCentral()
 }
-...
 dependencies {
-  implementation("pt.davidafsilva.vertx:vertx-logging-interceptor:0.1.3")
+    implementation("pt.davidafsilva.vertx:vertx-logging-interceptor:0.1.3")
 }
 ```
+
 #### Maven
 ```xml
 <dependencies>
