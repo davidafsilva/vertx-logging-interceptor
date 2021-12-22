@@ -52,17 +52,6 @@ dependencies {
 ```
 #### Maven
 ```xml
-<repositories>
-  <repository>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-    <id>central</id>
-    <name>bintray</name>
-    <url>https://jcenter.bintray.com</url>
-  </repository>
-</repositories>
-...
 <dependencies>
   <dependency>
     <groupId>pt.davidafsilva.vertx</groupId>
